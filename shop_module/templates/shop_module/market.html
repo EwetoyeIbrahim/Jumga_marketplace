@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main_page %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+  {% for product in products %}
+  {% include 'shop_module/product_catalog.html' %}
+  {% endfor %}
+</div>
+{% endblock main_page %}
+
+{% block bottom_styles_scripts%}
+<script src="{{ url_for('static', filename='base/js/loadingoverlay.js') }}">
+</script>
+<script src="{{ url_for('static', filename='base/js/table_cart.js') }}">
+</script>
+{% endblock bottom_styles_scripts %}

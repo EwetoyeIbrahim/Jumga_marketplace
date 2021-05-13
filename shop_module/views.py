@@ -89,7 +89,7 @@ def cart():
         return redirect(url_for('shop.cart', cart=cart))
     if cart:
         cart = OrderLine.query.filter_by(order_id=cart.id).all()
-    return render_template('cart.html', cart=cart)
+    return render_template('shop_module/cart.html', cart=cart)
 
 
 @ shop.route('/checkout', methods=['GET'])
@@ -125,7 +125,8 @@ def checkout():
     # Compute amounts
     store_value = utilities.amounts_sep(
         iso_code, pay_data, current_app.config['CURRENCY_DISPATCHER'])
-    return render_template('checkout.html', cart=cart_lines,
+    return render_template('shop_module/checkout.html',
+                           cart=cart_lines,
                            store_value=store_value,
                            pay_data=pay_data)
 
@@ -144,9 +145,8 @@ def dashboard():
     # Pre-populating the form
     profile_form.name.data = current_user.name
     profile_form.email.data = current_user.email
-    return render_template('dashboard.html', profile_form=profile_form)
-
-    return render_template('dashboard.html')
+    return render_template('shop_module/dashboard.html',
+                           profile_form=profile_form)
 
 
 @ shop.route('/img/<string:model>/<int:id>', methods=['GET'])
@@ -164,7 +164,8 @@ def image(model, id):
 def market():
     iso_code = request.cookies.get('iso_code')
     products = Product.public()
-    return render_template('market.html', products=products,
+    return render_template('shop_module/market.html',
+                           products=products,
                            iso_code=iso_code)
 
 
@@ -245,7 +246,8 @@ def store_admin(store_name):
     if store.account:
         account_form.account_num.data = store.account.account_num
         account_form.bank.data = store.account.bank
-    return render_template('store_admin.html', store_form=store_form,
+    return render_template('shop_module/store_admin.html',
+                           store_form=store_form,
                            account_form=account_form,
                            activated=store.account)
 
@@ -253,7 +255,7 @@ def store_admin(store_name):
 @ shop.route('/store/new', methods=['GET', 'POST'])
 @ login_required
 def store_new():
-    return render_template('store_new.html',
+    return render_template('shop_module/store_new.html',
                            store_num=len(current_user.stores))
 
 
@@ -262,7 +264,8 @@ def store_product(store_name):
     # List the products
     store = Store.query.filter_by(name=store_name).first()
     prod_list = Product.query.filter_by(store_id=store.id).all()
-    return render_template('market.html', products=prod_list,
+    return render_template('shop_module/market.html',
+                           products=prod_list,
                            iso_code=request.cookies.get('iso_code'))
 
 
@@ -293,7 +296,7 @@ def store_product_admin(store_name):
                     prod_form.description.data = prod.description
                     prod_form.price.data = prod.price
                     prod_form.is_active.data = prod.is_active
-                    return render_template('product.html',
+                    return render_template('shop_module/product.html',
                                            product_form=prod_form)
             else:
                 flash("Unable to edit product", 'danger')
@@ -311,7 +314,7 @@ def store_product_admin(store_name):
             flash('Product created successfully', 'success')
             # List the products
             return redirect(url_for('shop.store_product', store_name=store_name))
-        return render_template('product.html', product_form=prod_form, currency=store.iso_code)
+        return render_template('shop_module/product.html', product_form=prod_form, currency=store.iso_code)
     else:
         flash('Access Error', 'danger')
         return redirect(url_for('shop.market'))

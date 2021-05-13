@@ -9,3 +9,6 @@ __pycache__/
 *trash*
 *tests*
 shell.py
+
+# Prevent mistake addition of modified test db to commit
+platform.sqlite3

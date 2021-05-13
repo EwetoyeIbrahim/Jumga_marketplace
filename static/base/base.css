@@ -1,0 +1,9 @@
+.crop-text-2 {
+    line-height: 1.2em;
+    height: 2.4em;       /* height is 2x line-height, so two lines will display */
+    -webkit-line-clamp: 2;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}

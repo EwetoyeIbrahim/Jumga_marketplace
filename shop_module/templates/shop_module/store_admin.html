@@ -1,7 +1,7 @@
-{% extends 'dashboard.html' %}
+{% extends 'shop_module/dashboard.html' %}
 {% block field_page %}
 
-{% from 'custom_macro.html' import render_field_with_errors, render_field_btn %}
+{% from 'shop_module/custom_macro.html' import render_field_with_errors, render_field_btn %}
 <h5 class='text-center'> Store Details
   {% if activated %}
   <a  class="btn btn-sm btn-secondary" href="{{ url_for('shop.store_product', store_name=store_form.name.data) }}">
@@ -78,5 +78,5 @@
 </script>
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css" />
-<script src="{{ url_for('static', filename='shop/js/bootstrap-select-1.13.1.js') }}"></script>
+<script src="{{ url_for('static', filename='base/js/bootstrap-select-1.13.1.js') }}"></script>
 {% endblock bottom_styles_scripts %}

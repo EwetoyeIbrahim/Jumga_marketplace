@@ -1,0 +1,31 @@
+<div class="col">
+  <div class="card mb-4">
+    <img class="card-img-top" alt="product image"
+    src="{{ url_for('shop.image', model='product', id=product.id) }}">
+    <div class="card-body">
+        <p class="card-title crop-text-2">{{ product.name }}</p>
+        {% if iso_code %}
+        <p class="card-text font-weight-bold mt-n3">
+        {{ iso_code }} {{ product.sale_price(
+        config.PRODUCT_PRICING, iso_code, config.MULTICURRENCY) }}
+        </p>
+        {% endif %}
+    </div>
+    {% if can_edit_product(current_user, product.store) %}
+    <div class="card-footer text-center">
+        <a href="{{ url_for('shop.store_product_admin',
+        store_name=product.store.name, id=product.id) }}"
+        class="font-weight-bold">
+        Edit <i class="fas fa-edit" aria-hidden="true"></i>
+        </a>
+    </div>
+    {% else %}
+    <div class="card-footer text-center bg-warning">
+        <a href="{{ url_for('shop.cart', id=product.id) }}"
+        class="text-white font-weight-bold">
+        Add to cart <i class="fa fa-cart-plus" aria-hidden="true"></i>
+        </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
